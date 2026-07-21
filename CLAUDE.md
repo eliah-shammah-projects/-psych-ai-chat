@@ -78,6 +78,17 @@ Foco: demonstrar prompt engineering com personas complexas e contrastantes (port
 
 ---
 
+## Versão em inglês (portfólio)
+
+Criar um repo separado com o mesmo app totalmente em inglês — frontend, personas e `system_prompt`. O backend não muda. Prioridade: fazer após o CI/CD estar funcionando neste repo.
+
+O que muda:
+- Todos os textos do frontend (HTML, placeholders, disclaimer, login)
+- `system_prompt`, `descricao_curta`, `abertura`, `bibliografia` de cada persona — reescrever em inglês
+- Nomes das personas: "Psychologist › Psychoanalyst", "Psychologist › CBT" etc.
+
+---
+
 ## Abordagens futuras
 - ACT já incluído ✅
 - Considerar adicionar mais abordagens no futuro (ex: Sistêmica, Junguiana)
