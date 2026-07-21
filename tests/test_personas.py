@@ -45,10 +45,11 @@ def registrar_teste(persona: dict, modo: str, observacao: str):
         json.dump(log, f, ensure_ascii=False, indent=2)
 
 
-def chamar(system: str, mensagem: str) -> str:
+def chamar(system: str, mensagem: str, temperature: float = 1.0) -> str:
     response = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=300,
+        temperature=temperature,
         system=system,
         messages=[{"role": "user", "content": mensagem}],
     )
@@ -58,11 +59,14 @@ def chamar(system: str, mensagem: str) -> str:
 def chat_interativo(persona: dict):
     print(f"\n{'='*50}")
     print(f"Conversando com: {persona['emoji']} {persona['nome']}")
+    print(f"Temperatura: {persona.get('temperature', 1.0)}")
     print("Digite 'sair' para encerrar e registrar observação.")
-    print(f"{'='*50}\n")
+    print(f"{'='*50}")
+    print(f"\n{persona.get('abertura', '')}\n")
 
     historico = []
     system = persona["system_prompt"] or "Você é um assistente útil."
+    temperature = persona.get("temperature", 1.0)
 
     while True:
         mensagem = input("Você: ").strip()
@@ -76,6 +80,7 @@ def chat_interativo(persona: dict):
         response = client.messages.create(
             model="claude-sonnet-4-6",
             max_tokens=300,
+            temperature=temperature,
             system=system,
             messages=historico,
         )
@@ -92,13 +97,15 @@ def chat_interativo(persona: dict):
 def teste_robustez(persona: dict):
     print(f"\n{'='*50}")
     print(f"Teste de robustez: {persona['emoji']} {persona['nome']}")
+    print(f"Temperatura: {persona.get('temperature', 1.0)}")
     print(f"{'='*50}\n")
 
     system = persona["system_prompt"] or "Você é um assistente útil."
+    temperature = persona.get("temperature", 1.0)
     mensagens = persona.get("mensagens_extremas", []) + MENSAGENS_GENERICAS_EXTREMAS
 
     for mensagem in mensagens:
-        resposta = chamar(system, mensagem)
+        resposta = chamar(system, mensagem, temperature)
         print(f"> Você: {mensagem}")
         print(f"> {persona['nome']}: {resposta}\n")
 

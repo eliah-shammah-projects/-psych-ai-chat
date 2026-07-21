@@ -30,6 +30,26 @@ Cada persona tem: `nome`, `emoji`, `categoria`, `descricao_curta`, `descricao_lo
 4. Implementar `app.py` — entry point Flask
 5. Construir frontend (HTML/CSS/JS): seleção de abordagem + interface de chat
 6. Testar o app completo no browser
+7. CI/CD com testes e deploy na AWS (ver seção abaixo)
+
+---
+
+## CI/CD — Testes e Deploy AWS
+
+### Pipeline (a implementar após MVP funcional)
+1. **Testes automatizados** — `pytest` cobrindo rotas Flask e chamadas ao `claude_service`
+2. **GitHub Actions** — workflow que roda os testes a cada push/PR na branch `main`
+3. **Deploy AWS** — app containerizado (Docker) publicado via:
+   - **ECR** para o registro da imagem
+   - **ECS Fargate** (ou Elastic Beanstalk) para rodar o container
+   - Variáveis sensíveis (`ANTHROPIC_API_KEY`) em **AWS Secrets Manager** ou **Parameter Store**
+4. **Deploy automático** — Actions faz push do container e atualiza o serviço ECS somente se os testes passarem
+
+### Ordem sugerida
+- Escrever testes unitários antes de subir pra AWS
+- Criar `Dockerfile` junto com a finalização do backend
+- Configurar workflow do GitHub Actions (`.github/workflows/deploy.yml`)
+- Provisionar infra AWS (ECR + ECS) antes do primeiro deploy
 
 > Todos os arquivos de backend e frontend existem mas estão **vazios** — só a estrutura de pastas foi criada.
 
@@ -61,6 +81,7 @@ Cada persona tem: `nome`, `emoji`, `categoria`, `descricao_curta`, `descricao_lo
 ## Abordagens futuras
 - ACT já incluído ✅
 - Considerar adicionar mais abordagens no futuro (ex: Sistêmica, Junguiana)
+- **Psiquiatra** — persona que explica opções de medicamento pra o quadro descrito, como age no cérebro, efeitos colaterais e quando buscar avaliação presencial. Diferente das abordagens psicológicas: entra no campo farmacológico. Exige atenção redobrada no prompt pra não substituir consulta real (disclaimer forte).
 
 ---
 

@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psicologia AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
 
+  <!-- ── TELA 1: Seleção ───────────────────────────────────────── -->
+  <main id="select-screen">
+
+    <div class="bg-motif" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
+           preserveAspectRatio="xMidYMid slice">
+        <path d="M-100,160 C200,100 500,220 800,160 S1400,100 1800,160"
+              stroke="#1E3A45" stroke-width="1.5" fill="none"/>
+        <path d="M-100,330 C200,270 500,390 800,330 S1400,270 1800,330"
+              stroke="#1E3A45" stroke-width="1.5" fill="none"/>
+        <path d="M-100,500 C200,440 500,560 800,500 S1400,440 1800,500"
+              stroke="#1E3A45" stroke-width="1.5" fill="none"/>
+        <path d="M-100,670 C200,610 500,730 800,670 S1400,610 1800,670"
+              stroke="#1E3A45" stroke-width="1.5" fill="none"/>
+        <path d="M-100,840 C200,780 500,900 800,840 S1400,780 1800,840"
+              stroke="#1E3A45" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="select-content">
+      <header class="select-header">
+        <h1 class="hero-title">Terapia é uma<br>conversa.<br>Escolha a sua.</h1>
+        <div class="hero-deco" aria-hidden="true">
+          <svg viewBox="0 0 280 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 12 C40 4 80 20 120 12 S200 4 280 12"
+                  stroke="#7FB8DE" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M0 24 C40 16 80 32 120 24 S200 16 280 24"
+                  stroke="#4FD8C4" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="hero-sub">7 abordagens diferentes, 7 jeitos diferentes de te ouvir</p>
+      </header>
+
+      <div id="cards-grid" class="cards-grid"
+           role="list" aria-label="Abordagens terapêuticas"></div>
+
+      <footer class="select-footer">
+        <p class="disclaimer">não substitui acompanhamento profissional</p>
+      </footer>
+    </div>
+  </main>
+
+  <!-- ── TELA 2: Chat ──────────────────────────────────────────── -->
+  <main id="chat-screen" class="hidden">
+
+    <header class="chat-header">
+      <button id="btn-back" class="btn-back" aria-label="Voltar para seleção">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+      </button>
+
+      <div class="persona-avatar-wrap">
+        <span class="glow-ring" aria-hidden="true"></span>
+        <svg id="chat-icon" class="chat-persona-icon"
+             viewBox="0 0 40 40" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true"></svg>
+      </div>
+
+      <div class="persona-info">
+        <span id="chat-name" class="chat-persona-name"></span>
+        <span id="chat-category" class="chat-persona-category"></span>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-sobre" class="btn-ghost" aria-expanded="false">Sobre</button>
+        <button id="btn-reset" class="btn-ghost btn-icon"
+                aria-label="Reiniciar conversa" title="Reiniciar conversa">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="chat-messages" class="chat-messages"
+         role="log" aria-live="polite" aria-label="Conversa"></div>
+
+    <div class="chat-bottom">
+      <div class="chat-input-row">
+        <input id="chat-input" type="text" class="chat-input"
+               placeholder="escreva aqui..."
+               autocomplete="off" aria-label="Sua mensagem">
+        <button id="btn-send" class="btn-send" aria-label="Enviar mensagem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+
+      <div id="bibliography-panel" class="bibliography-panel hidden"
+           aria-label="Sobre esta abordagem">
+        <div id="bibliography-content" class="bibliography-content"></div>
+      </div>
+
+      <footer class="chat-footer">
+        <p class="disclaimer">não substitui acompanhamento profissional</p>
+      </footer>
+    </div>
+
+  </main>
+
+  <noscript>
+    <p style="padding:2rem;text-align:center;color:#5F7D85">
+      Este app requer JavaScript.
+    </p>
+  </noscript>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
