@@ -5,7 +5,7 @@
   --aqua:      #4FD8C4;
   --ink:       #1E3A45;
   --card:      #FFFFFF;
-  --muted:     #5F7D85;
+  --muted:     #4E8EA4;
   --gradient:  linear-gradient(135deg, var(--sky), var(--aqua));
   --font-display: 'Fraunces', Georgia, serif;
   --font-body:    'Manrope', system-ui, sans-serif;
@@ -75,10 +75,17 @@ input {
 /* ─── Hero ───────────────────────────────────────────────────────── */
 .select-header {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 16px;
+  flex-direction: row;
+  align-items: center;
+  gap: 48px;
   width: 100%;
+}
+
+.hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .hero-title {
@@ -91,13 +98,17 @@ input {
 }
 
 .hero-deco {
-  width: min(260px, 75%);
+  flex-shrink: 0;
+  width: 260px;
+  background: var(--bg-base);
 }
 
-.hero-deco svg {
+.hero-deco img {
   width: 100%;
   height: auto;
   display: block;
+  mix-blend-mode: multiply;
+  filter: invert(1) sepia(1) saturate(5) hue-rotate(300deg) brightness(0.55) invert(1);
 }
 
 .hero-sub {
@@ -518,6 +529,16 @@ input {
   .select-content {
     padding: 48px 18px 44px;
     gap: 36px;
+  }
+
+  .select-header {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero-deco {
+    width: 180px;
+    align-self: flex-start;
   }
 
   .card {

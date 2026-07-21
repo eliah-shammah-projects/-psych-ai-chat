@@ -15,6 +15,7 @@ def get_personas():
             "categoria": p["categoria"],
             "descricao_curta": p["descricao_curta"],
             "abertura": p["abertura"],
+            "bibliografia": p["bibliografia"],
         }
         for p in personas
     ])
