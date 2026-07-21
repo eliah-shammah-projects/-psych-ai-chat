@@ -6,7 +6,15 @@ Foco: demonstrar prompt engineering com personas complexas e contrastantes (port
 
 ---
 
-## Status atual (2026-07-19)
+## Status atual (2026-07-21)
+
+### ✅ MVP completo e funcionando localmente
+- **Backend**: `app.py`, `services/claude_service.py`, `routes/chat.py`, `routes/auth.py` — todos implementados
+- **Frontend**: tela de seleção + chat — implementados (`index.html`, `style.css`, `script.js`)
+- **Autenticação**: login por senha via `APP_PASSWORD` env var — `login.html` + guard `before_request`
+- **python-dotenv**: `load_dotenv()` no `app.py` lê `.env` automaticamente
+- **Ilustração**: `frontend/static/illustration.jpg` com CSS filter azul-verde + `mix-blend-mode: multiply`
+- **7 personas**: todas com `temperature`, `descricao_curta` formal, `bibliografia` e `abertura`
 
 ### ✅ Personas concluídas (todas testadas e aprovadas no `personas.json`)
 - Psicólogo › Psicanalista 🛋️
@@ -17,20 +25,12 @@ Foco: demonstrar prompt engineering com personas complexas e contrastantes (port
 - Psicólogo › Existencial 🌌
 - Psicólogo › ACT 🌿
 
-Cada persona tem: `nome`, `emoji`, `categoria`, `descricao_curta`, `descricao_longa`, `system_prompt` (com tags `<persona>`, `<tom>`, `<formato>`, `<evitar>`), e `mensagens_extremas` (4 frases por persona — 2 genéricas + 2 específicas da abordagem).
-
-### ⚠️ Pendências antes de implementar o backend (ainda abertas)
-- **Abertura obrigatória** — em toda primeira mensagem da conversa, a persona se apresenta: diz qual abordagem é e em poucas palavras como vai funcionar. Aplicar em todas as 7 personas (adicionar regra no `system_prompt` de cada uma).
-- **Verificar temperaturas** — definir temperatura ideal para cada persona e adicionar campo `"temperature"` no `personas.json`. Personas criativas = temperatura alta, personas precisas = temperatura baixa.
-
-### 🔜 Próximos passos (MVP) — nenhum implementado ainda
-1. Resolver as 2 pendências acima no `personas.json`
-2. Implementar `services/claude_service.py` — função que carrega persona do JSON e chama a API com histórico
-3. Implementar `routes/chat.py` — rota `POST /chat` com histórico em sessão Flask + `POST /reset`
-4. Implementar `app.py` — entry point Flask
-5. Construir frontend (HTML/CSS/JS): seleção de abordagem + interface de chat
-6. Testar o app completo no browser
-7. CI/CD com testes e deploy na AWS (ver seção abaixo)
+### 🔜 Próximos passos — CI/CD e deploy AWS
+1. **Testes automatizados** — `pytest` em `tests/test_routes.py` e `tests/test_service.py`
+2. **Dockerfile** + `.dockerignore` — containerizar o app Flask
+3. **Terraform** — provisionar infra AWS: ECR, ECS Fargate, VPC, ALB, Secrets Manager, IAM, CloudWatch
+4. **GitHub Actions** — `.github/workflows/deploy.yml`: roda testes → build Docker → push ECR → deploy ECS
+5. **Secrets na AWS** — `ANTHROPIC_API_KEY`, `APP_PASSWORD`, `FLASK_SECRET_KEY` no Secrets Manager
 
 ---
 
@@ -51,7 +51,7 @@ Cada persona tem: `nome`, `emoji`, `categoria`, `descricao_curta`, `descricao_lo
 - Configurar workflow do GitHub Actions (`.github/workflows/deploy.yml`)
 - Provisionar infra AWS (ECR + ECS) antes do primeiro deploy
 
-> Todos os arquivos de backend e frontend existem mas estão **vazios** — só a estrutura de pastas foi criada.
+> Para rodar localmente: configurar `.env` com `ANTHROPIC_API_KEY`, `APP_PASSWORD` e `FLASK_SECRET_KEY=dev`, depois `python app.py`.
 
 ---
 
@@ -120,21 +120,29 @@ Cada persona tem: `nome`, `emoji`, `categoria`, `descricao_curta`, `descricao_lo
 ## Arquitetura
 
 ```
-psicologia_ai/
-├── app.py                  # entry point Flask (vazio — a implementar)
-├── personas.json           # definição das 7 abordagens ✅
+psych-ai-chat/
+├── app.py                        # entry point Flask ✅
+├── personas.json                 # 7 abordagens completas ✅
+├── .env                          # ANTHROPIC_API_KEY, APP_PASSWORD, FLASK_SECRET_KEY (não commitado)
 ├── routes/
-│   └── chat.py             # POST /chat + POST /reset (vazio — a implementar)
+│   ├── chat.py                   # GET /personas, POST /chat, POST /reset ✅
+│   └── auth.py                   # GET/POST /login ✅
 ├── services/
-│   └── claude_service.py   # chama Claude API com system_prompt + histórico (vazio — a implementar)
+│   └── claude_service.py         # chama Claude API com system_prompt + histórico ✅
 ├── tests/
-│   ├── test_personas.py    # chat interativo de refinamento ✅
-│   └── prompt_log.json     # histórico de versões e observações ✅
-└── frontend/
-    ├── templates/index.html   # (a implementar)
-    └── static/
-        ├── script.js          # (a implementar)
-        └── style.css          # (a implementar)
+│   ├── test_personas.py          # chat interativo de refinamento ✅
+│   └── prompt_log.json           # histórico de versões e observações ✅
+├── frontend/
+│   ├── templates/
+│   │   ├── index.html            # SPA: seleção + chat ✅
+│   │   └── login.html            # tela de login ✅
+│   └── static/
+│       ├── script.js             # lógica do frontend ✅
+│       ├── style.css             # design completo ✅
+│       └── illustration.jpg      # ilustração hero ✅
+├── Dockerfile                    # (a implementar)
+├── terraform/                    # (a implementar)
+└── .github/workflows/deploy.yml  # (a implementar)
 ```
 
 ---
