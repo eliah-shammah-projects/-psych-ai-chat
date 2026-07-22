@@ -9,7 +9,7 @@ terraform {
   backend "s3" {
     bucket = "psych-ai-chat-tfstate"
     key    = "terraform.tfstate"
-    region = "eu-north-1"
+    region = "us-east-1"
   }
 }
 
