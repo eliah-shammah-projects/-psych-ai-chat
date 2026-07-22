@@ -25,6 +25,14 @@ Foco: demonstrar prompt engineering com personas complexas e contrastantes (port
 - Psicólogo › Existencial 🌌
 - Psicólogo › ACT 🌿
 
+### ❌ Bloqueios ativos — resolver antes de continuar
+
+1. **Key pair na região errada** — a `psych-ai-chat-key` foi criada em `us-east-1` mas o EC2 sobe em `eu-north-1`. Solução: ir em EC2 → trocar região pra `eu-north-1` → Key Pairs → Create key pair com o nome exato `psych-ai-chat-key` → baixar o novo `.pem` → atualizar o secret `EC2_SSH_KEY` no GitHub com o conteúdo do novo `.pem`.
+
+2. **Permissão ECR faltando** — o usuário IAM `psych-ai-chat-deploy` não tem `AmazonECRFullAccess`. Solução: IAM → Users → `psych-ai-chat-deploy` → Add permissions → Attach policies → `AmazonECRFullAccess`.
+
+Depois de resolver os dois: fazer push (ou re-run no Actions) pra testar de novo.
+
 ### 🔜 Próximos passos — CI/CD e deploy AWS
 1. **Testes automatizados** — `pytest` em `tests/test_routes.py` e `tests/test_service.py`
 2. **Dockerfile** + `.dockerignore` — containerizar o app Flask
