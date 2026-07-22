@@ -78,6 +78,20 @@ Foco: demonstrar prompt engineering com personas complexas e contrastantes (port
 
 ---
 
+## README (a fazer)
+
+Criar `README.md` na raiz do repo. Deve cobrir:
+- O que é o app e o objetivo (portfólio de prompt engineering)
+- Screenshot ou GIF da interface
+- Como rodar localmente (`.env`, dependências, `python app.py`)
+- As 7 abordagens e suas diferenças
+- Stack utilizada
+- Link pro deploy (quando estiver na AWS)
+
+Fazer após o CI/CD estar funcionando, junto com a versão em inglês.
+
+---
+
 ## Versão em inglês (portfólio)
 
 Criar um repo separado com o mesmo app totalmente em inglês — frontend, personas e `system_prompt`. O backend não muda. Prioridade: fazer após o CI/CD estar funcionando neste repo.
