@@ -88,16 +88,21 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/psych-ai-chat:latest
 
       # ── Deploy no EC2: puxa nova imagem e reinicia container ─────────────────
+      - name: Get ECR login password
+        run: |
+          ECR_PASSWORD=$(aws ecr get-login-password --region ${{ env.AWS_REGION }})
+          echo "ECR_PASSWORD=$ECR_PASSWORD" >> $GITHUB_ENV
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ env.EC2_IP }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
+          envs: ECR_URL,ECR_PASSWORD
           script: |
-            aws ecr get-login-password --region eu-north-1 | \
-              docker login --username AWS --password-stdin ${{ env.ECR_URL }}
-            docker pull ${{ env.ECR_URL }}:latest
+            echo "$ECR_PASSWORD" | docker login --username AWS --password-stdin $ECR_URL
+            docker pull $ECR_URL:latest
             docker stop psych-ai-chat 2>/dev/null || true
             docker rm psych-ai-chat 2>/dev/null || true
             docker run -d \
@@ -107,4 +112,4 @@ jobs:
               -e ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}" \
               -e APP_PASSWORD="${{ secrets.APP_PASSWORD }}" \
               -e FLASK_SECRET_KEY="${{ secrets.FLASK_SECRET_KEY }}" \
-              ${{ env.ECR_URL }}:latest
+              $ECR_URL:latest
