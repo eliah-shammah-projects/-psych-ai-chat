@@ -6,7 +6,7 @@ Foco: demonstrar prompt engineering com personas complexas e contrastantes (port
 
 ---
 
-## Status atual (2026-07-21)
+## Status atual (2026-07-27)
 
 ### ✅ MVP completo e funcionando localmente
 - **Backend**: `app.py`, `services/claude_service.py`, `routes/chat.py`, `routes/auth.py` — todos implementados
@@ -31,7 +31,17 @@ Foco: demonstrar prompt engineering com personas complexas e contrastantes (port
 2. **Permissão ECR faltando** — `AmazonEC2ContainerRegistryFullAccess` adicionado ao IAM user `psych-ai-chat-deploy`.
 3. **ECR login no pipeline** — corrigido para buscar a senha do ECR no runner do Actions em vez do EC2 (que não tem AWS CLI).
 
-### 🔜 Próximos passos — CI/CD e deploy AWS
+### ✅ Versão em inglês concluída (2026-07-27)
+- Repo separado: `psych-ai-chat---English-version`
+- Mesmo EC2 (`13.61.109.17`), app inglês na porta 8080
+- Personas, frontend e testes totalmente em inglês
+- CI/CD independente rodando e verde
+
+### 🔜 Próximos passos
+1. **README** — criar nos dois repos (português e inglês)
+2. **CV** — atualizar com os dois projetos e links de deploy
+
+### ✅ CI/CD e deploy AWS — concluído
 1. **Testes automatizados** — `pytest` em `tests/test_routes.py` e `tests/test_service.py`
 2. **Dockerfile** + `.dockerignore` — containerizar o app Flask
 3. **Terraform** — provisionar infra AWS: ECR, ECS Fargate, VPC, ALB, Secrets Manager, IAM, CloudWatch
